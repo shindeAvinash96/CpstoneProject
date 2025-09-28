@@ -20,7 +20,9 @@ namespace LoanApplicationWebAPI.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal Installment { get; set; }
 
+        public bool IsNPA { get; set; }=false;
+
         public DateTime StartDate { get; set; }
-        public ICollection<Repayment>? Repayments { get; set; }
+        public ICollection<Repayment>? Repayments { get; set; } = new List<Repayment>();    
     }
 }

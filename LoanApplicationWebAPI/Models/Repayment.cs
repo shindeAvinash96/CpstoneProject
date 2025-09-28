@@ -15,7 +15,9 @@ namespace LoanApplicationWebAPI.Models
         public decimal Amount { get; set; }
 
         public DateTime DueDate { get; set; }
-        public bool IsPaid { get; set; }
+        public RepaymentStatus Status { get; set; }
+
+        public bool IsPaid { get; set; } = false;
         public DateTime? PaidDate { get; set; }
     }
 }

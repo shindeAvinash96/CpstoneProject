@@ -18,6 +18,12 @@ namespace LoanApplicationWebAPI.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal LoanAmount { get; set; }
 
+        //[Required]
+        //[Column(TypeName = "decimal(5,2)")]
+        //public decimal InterestRate { get; set; } = 0;
+
+        public ApplicationStatus Status { get; set; }= ApplicationStatus.Pending;
+
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         // Foreign Keys

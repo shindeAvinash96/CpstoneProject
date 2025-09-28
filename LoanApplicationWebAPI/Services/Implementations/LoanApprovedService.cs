@@ -25,5 +25,17 @@ namespace LoanApplicationWebAPI.Services
         public async Task<LoanApproved> Update(LoanApproved approved) => await _loanApprovedRepo.Update(approved);
 
         public async Task Delete(int id) => await _loanApprovedRepo.Delete(id);
+
+
+        // Approve loan
+        public Task<LoanApproved> ApproveLoanAsync(int loanApplicationId) =>
+            _loanApprovedRepo.ApproveLoanAsync(loanApplicationId);
+
+        // ------------------ New: Mark repayment as paid ------------------
+        public Task MarkRepaymentAsPaidAsync(int repaymentId) =>
+            _loanApprovedRepo.MarkRepaymentAsPaidAsync(repaymentId);
+
+        // ------------------ New: Update overdue / NPA ------------------
+        public Task UpdateOverduesAsync() => _loanApprovedRepo.UpdateOverduesAsync();
     }
 }

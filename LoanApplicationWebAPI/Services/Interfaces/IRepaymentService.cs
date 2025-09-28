@@ -9,5 +9,8 @@ namespace LoanApplicationWebAPI.Services.Interfaces
         Task<Repayment> Add(Repayment repayment);
         Task<Repayment> Update(Repayment repayment);
         Task Delete(int id);
+
+        Task MarkRepaymentAsPaidAsync(int repaymentId);
+        Task UpdateOverduesAndNotifyAsync(CancellationToken ct);
     }
 }

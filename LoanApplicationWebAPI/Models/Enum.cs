@@ -44,7 +44,8 @@
     public enum RepaymentStatus
     {
         Pending,
-        Completed,
-        Overdue
+        Paid,
+        Overdue,
+        NPA
     }
 }

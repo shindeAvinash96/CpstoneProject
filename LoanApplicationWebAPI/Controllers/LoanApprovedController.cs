@@ -1,52 +1,96 @@
 ﻿using LoanApplicationWebAPI.Models;
-using LoanApplicationWebAPI.Services;
 using LoanApplicationWebAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LoanApplicationWebAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class LoanApprovedController : ControllerBase
     {
-        private readonly ILoanApprovedService _service;
+        private readonly ILoanApprovedService _loanApprovedService;
 
-        public LoanApprovedController(ILoanApprovedService service)
+        public LoanApprovedController(ILoanApprovedService loanApprovedService)
         {
-            _service = service;
+            _loanApprovedService = loanApprovedService;
         }
 
+        // ---------------------------
+        // 1️⃣ Get all approved loans
+        // ---------------------------
         [HttpGet]
-        public async Task<IActionResult> GetAll() => Ok(await _service.GetAll());
+        public async Task<IActionResult> GetAll()
+        {
+            var loans = await _loanApprovedService.GetAll();
+            return Ok(loans);
+        }
 
+        // ---------------------------
+        // 2️⃣ Get approved loan by Id
+        // ---------------------------
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var approved = await _service.GetById(id);
-            if (approved == null) return NotFound();
-            return Ok(approved);
+            var loan = await _loanApprovedService.GetById(id);
+            if (loan == null) return NotFound("Approved loan not found.");
+            return Ok(loan);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Add([FromBody] LoanApproved approved)
+        // ---------------------------
+        // 3️⃣ Approve a loan
+        // ---------------------------
+        [HttpPost("approve/{loanApplicationId}")]
+        public async Task<IActionResult> ApproveLoan(int loanApplicationId)
         {
-            var created = await _service.Add(approved);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+            try
+            {
+                var approvedLoan = await _loanApprovedService.ApproveLoanAsync(loanApplicationId);
+                return Ok(approvedLoan);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] LoanApproved approved)
+        // ---------------------------
+        // 4️⃣ Mark repayment as paid
+        // ---------------------------
+        [HttpPost("repayment/pay/{repaymentId}")]
+        public async Task<IActionResult> MarkRepaymentPaid(int repaymentId)
         {
-            if (id != approved.Id) return BadRequest();
-            var updated = await _service.Update(approved);
-            return Ok(updated);
+            try
+            {
+                await _loanApprovedService.MarkRepaymentAsPaidAsync(repaymentId);
+                return Ok("Repayment marked as Paid");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        // ---------------------------
+        // 5️⃣ Update overdue / NPA statuses
+        // ---------------------------
+        [HttpPost("repayment/update-overdues")]
+        public async Task<IActionResult> UpdateOverdues()
         {
-            await _service.Delete(id);
-            return NoContent();
+            await _loanApprovedService.UpdateOverduesAsync();
+            return Ok("Overdues updated successfully");
+        }
+
+        // ---------------------------
+        // 6️⃣ Get repayment schedule for an approved loan
+        // ---------------------------
+        [HttpGet("{approvedLoanId}/repayments")]
+        public async Task<IActionResult> GetRepaymentSchedule(int approvedLoanId)
+        {
+            var loan = await _loanApprovedService.GetById(approvedLoanId);
+            if (loan == null) return NotFound("Approved loan not found.");
+
+            return Ok(loan.Repayments.OrderBy(r => r.InstallmentNumber));
         }
     }
 }
