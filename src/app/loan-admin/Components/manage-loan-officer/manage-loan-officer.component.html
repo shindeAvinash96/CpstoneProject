@@ -1,0 +1,56 @@
+<div class="container mt-4">
+  <h2>Manage Loan Officers</h2>
+
+  <div class="alert alert-success" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <form (ngSubmit)="addOfficer()" class="mb-4">
+    <div class="row g-3">
+      <div class="col-md-3">
+        <input type="text" class="form-control" placeholder="First Name" [(ngModel)]="newOfficer.firstName" name="firstName" required>
+      </div>
+      <div class="col-md-3">
+        <input type="text" class="form-control" placeholder="Last Name" [(ngModel)]="newOfficer.lastName" name="lastName" required>
+      </div>
+      <div class="col-md-3">
+        <input type="text" class="form-control" placeholder="Username" [(ngModel)]="newOfficer.userName" name="userName" required>
+      </div>
+      <div class="col-md-3">
+        <input type="email" class="form-control" placeholder="Email" [(ngModel)]="newOfficer.email" name="email" required>
+      </div>
+    </div>
+    <div class="row g-3 mt-2">
+      <div class="col-md-3">
+        <input type="text" class="form-control" placeholder="Branch" [(ngModel)]="newOfficer.branch" name="branch" required>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-primary">Add Officer</button>
+      </div>
+    </div>
+  </form>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Branch</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let officer of loanOfficers">
+        <td>{{ officer.firstName }} {{ officer.lastName }}</td>
+        <td>{{ officer.userName }}</td>
+        <td>{{ officer.email }}</td>
+        <td>{{ officer.branch }}</td>
+        <td>{{ officer.isActive ? 'Active' : 'Inactive' }}</td>
+        <td>
+          <button class="btn btn-danger btn-sm" (click)="deleteOfficer(officer.officerId)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

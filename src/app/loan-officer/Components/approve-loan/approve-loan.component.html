@@ -1,0 +1,28 @@
+<div class="container mt-4" *ngIf="loan">
+  <h2>Approve Loan Application</h2>
+
+  <div class="alert alert-success" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <div class="card mt-3">
+    <div class="card-body">
+      <h5 class="card-title">Loan ID: {{ loan.loanApplicationId }}</h5>
+      <p class="card-text"><strong>Customer:</strong> {{ loan.customer?.firstName }} {{ loan.customer?.lastName }}</p>
+      <p class="card-text"><strong>Loan Type:</strong> {{ loan.loanType }}</p>
+      <p class="card-text"><strong>Loan Amount:</strong> {{ loan.loanAmount | currency }}</p>
+      <p class="card-text"><strong>Status:</strong> {{ loan.status }}</p>
+      <p class="card-text"><strong>Loan Scheme:</strong> {{ loan.loanScheme?.schemeName }}</p>
+      <p class="card-text"><strong>Interest Rate:</strong> {{ loan.loanScheme?.interestRate }}%</p>
+      <p class="card-text"><strong>Tenure:</strong> {{ loan.loanScheme?.tenureInMonths }} months</p>
+
+      <button class="btn btn-success me-2" (click)="approveLoan()">Approve</button>
+      <button class="btn btn-danger" (click)="rejectLoan()">Reject</button>
+      <button class="btn btn-secondary ms-2" (click)="router.navigate(['/officer-dashboard'])">Back</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!loan && !errorMessage" class="text-center mt-5">
+  <div class="spinner-border text-primary" role="status"></div>
+  <p>Loading loan details...</p>
+</div>

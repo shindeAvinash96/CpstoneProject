@@ -1,0 +1,25 @@
+<header class="header">
+  <nav class="nav">
+    <div class="nav-brand">
+      <h2>LoanFlow</h2>
+    </div>
+    
+    <div class="nav-links" [class.active]="isMenuOpen">
+      <!-- <a href="#features">Features</a>
+      <a href="#calculator">Calculator</a> -->
+      <!-- <a href="#how-it-works">How It Works</a>
+      <a href="#testimonials">Testimonials</a> -->
+    </div>
+
+    <div class="nav-actions">
+      <button type="button" class="btn-login" (click)="goToLogin()">Login</button>
+      <button type="button" class="btn-signup"  (click)="goToRegister()">Register</button>
+    </div>
+
+    <button class="mobile-menu-btn" (click)="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+</header>

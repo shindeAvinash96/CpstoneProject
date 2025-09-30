@@ -1,0 +1,16 @@
+<section id="features" class="features">
+  <div class="container">
+    <div class="section-header">
+      <h2>Powerful Features for Modern Lending</h2>
+      <p>Everything you need to manage loans efficiently and scale your lending business</p>
+    </div>
+    
+    <div class="features-grid">
+      <div class="feature-card" *ngFor="let feature of features">
+        <div class="feature-icon">{{ feature.icon }}</div>
+        <h3>{{ feature.title }}</h3>
+        <p>{{ feature.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,14 @@
+<div class="bg-light border-end" id="sidebar-wrapper">
+  <div class="sidebar-heading text-center py-4">Menu</div>
+  <div class="list-group list-group-flush">
+    <a routerLink="/customer-dashboard" class="list-group-item list-group-item-action bg-light">Customer Dashboard</a>
+    <a routerLink="/apply-loan" class="list-group-item list-group-item-action bg-light">Apply Loan</a>
+    <a routerLink="/repayment-list" class="list-group-item list-group-item-action bg-light">Repayments</a>
+
+    <a routerLink="/admin-dashboard" *ngIf="role == 'Admin'" class="list-group-item list-group-item-action bg-light">Admin Dashboard</a>
+    <a routerLink="/manage-loan-officers" *ngIf="role == 'Admin'" class="list-group-item list-group-item-action bg-light">Manage Officers</a>
+
+    <a routerLink="/officer-dashboard" *ngIf="role == 'Officer'" class="list-group-item list-group-item-action bg-light">Officer Dashboard</a>
+    <a routerLink="/approve-loan" *ngIf="role === 'Officer'" class="list-group-item list-group-item-action bg-light">Approve Loans</a>
+  </div>
+</div>

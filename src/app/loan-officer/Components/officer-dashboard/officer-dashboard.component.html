@@ -1,0 +1,32 @@
+<div class="container mt-4">
+  <h2>Loan Officer Dashboard</h2>
+
+  <div class="alert alert-success" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <table class="table table-bordered table-hover mt-3">
+    <thead class="table-dark">
+      <tr>
+        <th>Loan ID</th>
+        <th>Customer</th>
+        <th>Loan Type</th>
+        <th>Loan Amount</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let loan of pendingLoans">
+        <td>{{ loan.loanApplicationId }}</td>
+        <td>{{ loan.customer?.firstName }} {{ loan.customer?.lastName }}</td>
+        <td>{{ loan.loanType }}</td>
+        <td>{{ loan.loanAmount | currency }}</td>
+        <td>{{ loan.status }}</td>
+        <td>
+          <button class="btn btn-success btn-sm me-2" (click)="approveLoan(loan.loanApplicationId)">Approve</button>
+          <button class="btn btn-danger btn-sm" (click)="rejectLoan(loan.loanApplicationId)">Reject</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

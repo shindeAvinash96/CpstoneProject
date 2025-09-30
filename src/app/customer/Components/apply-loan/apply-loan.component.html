@@ -1,0 +1,22 @@
+<div class="container mt-4">
+  <h3>Apply for a Loan</h3>
+  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  <form (ngSubmit)="applyLoan()">
+    <div class="mb-3">
+      <label class="form-label">Loan Type</label>
+      <input type="text" class="form-control" [(ngModel)]="loan.loanType" name="loanType" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Loan Amount</label>
+      <input type="number" class="form-control" [(ngModel)]="loan.loanAmount" name="loanAmount" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Loan Scheme</label>
+      <select class="form-select" [(ngModel)]="loan.loanSchemeId" name="loanSchemeId" required>
+        <option *ngFor="let scheme of schemes" [value]="scheme.loanSchemeId">{{ scheme.schemeName }}</option>
+      </select>
+    </div>
+    <button class="btn btn-primary">Apply Loan</button>
+  </form>
+</div>

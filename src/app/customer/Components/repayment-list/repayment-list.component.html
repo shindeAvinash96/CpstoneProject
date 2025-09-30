@@ -1,0 +1,30 @@
+<div class="container mt-4">
+  <h3>My Repayments</h3>
+  <table class="table table-bordered mt-3">
+    <thead>
+      <tr>
+        <th>Repayment ID</th>
+        <th>Loan ID</th>
+        <th>Installment No.</th>
+        <th>Amount</th>
+        <th>Due Date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let repayment of repayments">
+        <td>{{ repayment.repaymentId }}</td>
+        <td>{{ repayment.loanApproved.loanApprovedId }}</td>
+        <td>{{ repayment.installmentNumber }}</td>
+        <td>{{ repayment.amount | currency }}</td>
+        <td>{{ repayment.dueDate | date:'shortDate' }}</td>
+        <td>
+          <span [ngClass]="{
+            'badge bg-success': repayment.status === 'Paid',
+            'badge bg-warning': repayment.status === 'Pending'
+          }">{{ repayment.status }}</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
