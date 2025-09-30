@@ -1,3 +1,5 @@
+export type UserRole = 'Admin' | 'Customer' | 'Officer';
+
 export interface User {
   userId?: number;
   firstName: string;
@@ -5,5 +7,5 @@ export interface User {
   userName: string;
   email: string;
   passwordHash?: string;
-  userRoleType?: 'Admin' | 'Officer' | 'Customer';
+  userRoleType?: UserRole;
 }

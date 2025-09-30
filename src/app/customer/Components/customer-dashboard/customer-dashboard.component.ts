@@ -79,7 +79,7 @@ export class CustomerDashboardComponent implements OnInit {
         // Trigger change detection if necessary
         this.cdRef.detectChanges();
       },
-      error: (err) => console.error("API error:", err) // Handle any errors
+      error: (err) => alert("You Dont Have Any Loan Applications"), // Handle any errors
     });
   }
 }

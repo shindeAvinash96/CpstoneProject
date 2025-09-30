@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<!-- <div class="container mt-4">
   <h3>Apply for a Loan</h3>
   <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
   <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
@@ -19,4 +19,103 @@
     </div>
     <button class="btn btn-primary">Apply Loan</button>
   </form>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+<div class="container mt-5">
+  <div class="card shadow-lg border-0">
+    <div class="card-header bg-primary text-white">
+      <h3 class="mb-0">Apply for a New Loan 💰</h3>
+    </div>
+    <div class="card-body">
+      <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ successMessage }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="successMessage = ''"></button>
+      </div>
+      <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> {{ errorMessage }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="errorMessage = ''"></button>
+      </div>
+
+      <form #loanForm="ngForm" (ngSubmit)="applyLoan()">
+        
+        <div class="mb-3">
+          <label for="loanType" class="form-label">Loan Type</label>
+          <input 
+            type="text" 
+            class="form-control" 
+            id="loanType"
+            [(ngModel)]="loan.loanType" 
+            name="loanType" 
+            required 
+            placeholder="e.g., Personal Loan, Car Loan"
+            #loanType="ngModel"
+            [ngClass]="{'is-invalid': loanType.invalid && (loanType.dirty || loanType.touched)}"
+          >
+          <div *ngIf="loanType.invalid && (loanType.dirty || loanType.touched)" class="invalid-feedback">
+            Loan Type is required.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="loanAmount" class="form-label">Loan Amount ($)</label>
+          <input 
+            type="number" 
+            class="form-control" 
+            id="loanAmount"
+            [(ngModel)]="loan.loanAmount" 
+            name="loanAmount" 
+            required 
+            min="1000"
+            placeholder="Minimum amount is $1000"
+            #loanAmount="ngModel"
+            [ngClass]="{'is-invalid': loanAmount.invalid && (loanAmount.dirty || loanAmount.touched)}"
+          >
+          <div *ngIf="loanAmount.invalid && (loanAmount.dirty || loanAmount.touched)" class="invalid-feedback">
+            <span *ngIf="loanAmount.errors?.['required']">Loan Amount is required.</span>
+            <span *ngIf="loanAmount.errors?.['min']">Minimum loan amount is $1,000.</span>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="loanScheme" class="form-label">Loan Scheme</label>
+          <select 
+            class="form-select" 
+            id="loanScheme"
+            [(ngModel)]="loan.loanSchemeId" 
+            name="loanSchemeId" 
+            required
+            #loanSchemeId="ngModel"
+            [ngClass]="{'is-invalid': loanSchemeId.invalid && (loanSchemeId.dirty || loanSchemeId.touched)}"
+          >
+            <option [ngValue]="0" disabled>-- Select a Loan Scheme --</option> 
+            <option *ngFor="let scheme of schemes" [value]="scheme.loanSchemeId">
+              {{ scheme.schemeName }}
+            </option>
+          </select>
+          <div *ngIf="loanSchemeId.invalid && (loanSchemeId.dirty || loanSchemeId.touched)" class="invalid-feedback">
+            Please select a Loan Scheme.
+          </div>
+        </div>
+
+        <div class="d-grid gap-2">
+          <button 
+            type="submit" 
+            class="btn btn-primary btn-lg" 
+            [disabled]="loanForm.invalid"
+          >
+            <i class="bi bi-send-fill me-2"></i> Submit Application
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

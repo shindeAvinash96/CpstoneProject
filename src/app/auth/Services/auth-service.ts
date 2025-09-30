@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
+import { Customer } from '../../Models/customer';
+import { UserRole } from '../../Models/customer';
 
 @Injectable({
   providedIn: 'root'
@@ -26,10 +28,9 @@ export class AuthService {
   }
 
   // Register
-  register(user: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/Customers`, user);
+ register(user: Customer): Observable<any> {
+    return this.http.post(`${this.baseUrl}/Customers`, user);
   }
-
   // Logout
   logout(): void {
     localStorage.clear();
